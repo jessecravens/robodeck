@@ -1,6 +1,21 @@
 !!!
 html
   head
-    title= title
+    title RoboDeck
     link(rel='stylesheet', href='/stylesheets/style.css')
-  body!= body
+    link(rel='stylesheet', href='./core/deck.core.css')
+    link(rel='stylesheet', href='./extensions/goto/deck.goto.css')
+    link(rel='stylesheet', href='./extensions/hash/deck.hash.css')
+    link(rel='stylesheet', href='./extensions/menu/deck.menu.css')
+    link(rel='stylesheet', href='./extensions/navigation/deck.navigation.css')
+    link(rel='stylesheet', href='./extensions/scale/deck.scale.css')
+    link(rel='stylesheet', href='./extensions/status/deck.status.css')
+    // Style theme. More available in /themes/style/ or create your own.
+    link(rel='stylesheet', href='../themes/style/neon.css')
+    // Transition theme. More available in /themes/transition/ or create your own.    
+    link(rel='stylesheet', href='../themes/transition/horizontal-slide.css')
+     
+    script(src='../modernizr.custom.js')
+  body.deck-container
+    != body
+</head>

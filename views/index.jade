@@ -1,2 +1,66 @@
-h1= title
-p Welcome to #{title}
+// Create any number of elements with class slide within the container
+section.slide
+	h1 RoboDeck
+
+section.slide#how-to-overview
+	h2 How to Make a Deck
+		ol
+			li
+				h3 Write Slides
+				p Slide content is simple HTML
+			li
+				h3 Choose Themes
+				p One for slide styles and one for deck transitions
+			li
+				h3 Include Extensions
+				p Add extra functionality to your deck, or leave it stripped down
+
+section.slide#elements-videos
+	h2 Other Elements: Video Embeds
+		p Embed videos from your favorite online video service or with an HTML5 video&nbsp;element.
+		iframe(src='http://player.vimeo.com/video/1063136?title=0&amp;byline=0&amp;portrait=0', width='400', height='225', frameborder='0')
+		pre
+			code
+				&lt;iframe src=&quot;http://player.vimeo.com/video/1063136?title=0&amp;amp;byline=0&amp;amp;portrait=0&quot; width=&quot;400&quot; height=&quot;225&quot; frameborder=&quot;0&quot;&gt;&lt;/iframe&gt
+
+section.slide#elements-videos
+	h2 Code Example RoboDeck.js
+		pre
+			code
+				$(function() {
+				$.deck('.slide');
+				});
+
+// deck.navigation snippet
+a.deck-prev-link(href='#', title='Previous') &#8592
+a.deck-next-link(href='#', title='Next') &#8594
+
+
+// deck.goto snippet
+form.goto-form(action='.', method='get')
+	label(for='goto-slide') Go to slide:
+	input#goto-slide(type='text', name='slidenum', list='goto-datalist')
+	datalist#goto-datalist
+	input(type='submit', value='Go')
+
+// deck.hash snippet
+a.deck-permalink(href='.', title='Permalink to this slide') #
+
+// Other extension HTML snippets go here, at the bottom of the deck container.
+// Update these paths to point to the correct files.
+
+script(src='../jquery-1.7.min.js')
+script(src='../core/deck.core.js')
+script(src='../extensions/hash/deck.hash.js')
+script(src='../extensions/menu/deck.menu.js')
+script(src='../extensions/goto/deck.goto.js')
+script(src='../extensions/status/deck.status.js')
+script(src='../extensions/navigation/deck.navigation.js')
+script(src='../extensions/scale/deck.scale.js')
+
+
+// Add any other extension JS files here
+// Initialize the deck. You can put this in an external file if desired.
+
+script
+	$(function() {$.deck('.slide');});
