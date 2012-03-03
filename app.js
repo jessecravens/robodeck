@@ -29,7 +29,6 @@ app.configure('production', function(){
 });
 
 // Routes
-
 app.get('/', routes.index);
 
 app.listen(process.env.PORT || 3000);
