@@ -1,6 +1,6 @@
 
 /**
- * Module dependencies.
+ * module dependencies.
  */
 
 var express = require('express')
@@ -10,10 +10,11 @@ var express = require('express')
 
 useragent(true);
 
+// robodeck app
 
 var app = module.exports = express.createServer();
 
-// Configuration
+// app configs
 
 app.configure(function(){
   app.set('views', __dirname + '/views');
@@ -32,12 +33,10 @@ app.configure('production', function(){
   app.use(express.errorHandler());
 });
 
-// Routes
+// routes
 app.get('/', function(req, res) {
+	
 	var ua = useragent.is(req.headers['user-agent'])
-  	console.log(ua);
-	console.log(typeof ua);
-	console.log('ua chrome: ' + ua.chrome)
 
 	switch(true)
 	{
@@ -53,19 +52,6 @@ app.get('/', function(req, res) {
 	  console.log('fallback to default');
 	  routes.desktop(req, res);
 	}
-	
-	// if (ua.chrome) {
-	// 	console.log('detected as chrome desktop');
-	// 	routes.desktop(req, res);
-	// }
-	// else if(ua.mobile_safari){
-	// 	console.log('detected as mobile_safari');	
-	// 	routes.iphone(req, res);
-	// }
-	// else {
-	// 	console.log('fallback to default');
-	// 	routes.desktop(req, res);
-	// }
 });
 
 app.listen(process.env.PORT || 3000);
@@ -73,8 +59,8 @@ var sio = io.listen(app);
 
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 console.log(app)
-// var ua = useragent.is(req.headers['user-agent'])
-// console.log(ua);
+
+// web socket
 
 sio.sockets.on('connection', function (socket) {
   socket.emit('news', { hello: 'world' });
