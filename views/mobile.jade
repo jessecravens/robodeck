@@ -2,12 +2,25 @@
 html
   head
     title roboDeck.js mobile
-    link(rel='stylesheet', href='../javascripts/sencha/resources/css/sencha-touch.css')
-    link(rel='stylesheet', href='stylesheets/style.css')
-    script(src='../javascripts/sencha/sencha-touch-debug.js')
-    script(src='../javascripts/modernizr.custom.js')
-    script(src='../javascripts/socket.io/socket.io.js')
-    script(src='../javascripts/index-mobile.js')
+    
+    // sencha 1.0
+    // link(rel='stylesheet', href='../javascripts/sencha/resources/css/sencha-touch.css')
+    // script(src='http://maps.google.com/maps/api/js?sensor=true')
+    // script(src='./javascripts/sencha/sencha-touch-debug.js')
+
+    // sencha 2.0
+    link(rel='stylesheet', href='../sencha2/resources/css/sencha-touch.css', title='senchatouch', id='senchatouch')
+    link(rel='stylesheet', href='../sencha2/resources/css/android.css', title='android', id='android')
+    link(rel='stylesheet', href='../sencha2/resources/css/apple.css', title='apple', id='apple')
+    link(rel='stylesheet', href='../sencha2/resources/css/bb6.css', title='bb6', id='bb6')
+    link(rel='stylesheet', href='../resources/css/sink.css')
+    
+    script(src='../sencha2/builds/sencha-touch-all-debug.js')
+
+    // other    
+    script(src='./modernizr.custom.js')
+    script(src='./socket.io/socket.io.js')
+    script(src='./app-mobile.js')
     
   body.deck-container
     != body

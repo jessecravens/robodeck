@@ -1,0 +1,21 @@
+{
+	"versionString":"1.0",
+	"applicationName":"Sencha Native",
+	"applicationId":"com.sencha.NativeTest",
+	"inputPath":"/Users/ed/Code/native/device",
+    "outputPath":"/Users/ed/Code/native/built",
+    
+    "iconName": "icon.png",
+	"configuration":"Debug",
+	"platform":"iOS",
+	"deviceType":"iPhone",
+	
+	"certificateAlias":"iPhone Developer",
+	
+	"orientations": [
+	    "portrait",
+		"landscapeLeft",
+		"landscapeRight",
+		"portraitUpsideDown"
+	]
+}
