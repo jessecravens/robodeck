@@ -57,8 +57,16 @@ script
 
 script
 	var socket = io.connect();
-	socket.on('news', function (data) {
+	// socket.on('server', function (data) {
+		//console.log(data);
+		//socket.emit('client-desktop', { client: 'data', clientType: navigator.userAgent });
+	// });
+	socket.on('changeDeck', function (data) {
+		console.log("CHANGE REQUEST received");
 		console.log(data);
-		socket.emit('my other event', { my: 'data' });
+		// upon change request - update UI
+		$(".deck-container").css({"background":"red"})
+
+		// socket.emit('change:success', { client: 'hellyea', clientType: navigator.userAgent });
 	});
 

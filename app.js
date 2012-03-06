@@ -63,9 +63,23 @@ console.log(app)
 // web socket
 
 sio.sockets.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
+  // emit a message to client devices	
+  socket.emit('server', { server: 'data' });
+
+  // listen for a message from mobile clients
+  socket.on('client-mobile', function (data) {
+	console.log('CLIENT MOBILE event');    
+	console.log(data);
+	// pass date with callback function to desktop client
+	socket.emit('changeDeck', { update: data });
   });
-  console.log('A socket connected!');
+
+  // listen for a message from desktop clients
+  socket.on('client-desktop', function (data) {
+	console.log('CLIENT DESKTOP event');    
+	console.log(data);
+	socket.emit('changeDeck', { update: data });
+	
+  });
+  // console.log('A socket connected!');
 });

@@ -291,6 +291,10 @@ that use the API provided by core.
 		is ignored.
 		*/
 		next: function() {
+			console.log('next');
+			var socket = io.connect();
+			socket.emit('client-desktop', { deckEvent: 'next'});
+			
 			methods.go(current+1);
 		},
 		

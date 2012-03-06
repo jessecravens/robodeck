@@ -1,7 +1,11 @@
 
 script
 	var socket = io.connect();
-	socket.on('news', function (data) {
+	socket.on('server', function (data) {
 		console.log(data);
-		socket.emit('my other event', { my: 'data' });
+		// socket.emit('client-mobile', { client: 'data', clientType: navigator.userAgent });
+
+		// move to a button
+		// socket.emit('client-mobile', { deckHandler: 'changeBG', color: 'red' });
 	});
+	
