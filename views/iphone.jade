@@ -1,11 +1,19 @@
 
 script
 	var socket = io.connect();
-	socket.on('server', function (data) {
-		console.log(data);
+	// socket.on('connection', function (data) {
+		// console.log("CONNECTION");
+	// });
+	socket.on('message', function (data) {
+		console.log("MESSAGE");
+		console.dir(JSON.parse(data));
+	});
+
+	//socket.on('server', function (data) {
+		// console.log(data);
 		// socket.emit('client-mobile', { client: 'data', clientType: navigator.userAgent });
 
 		// move to a button
 		// socket.emit('client-mobile', { deckHandler: 'changeBG', color: 'red' });
-	});
+	//});
 	

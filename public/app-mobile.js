@@ -40,3 +40,23 @@ Ext.application({
     //of device detected
     profiles: ['Tablet', 'Phone']
 });
+
+
+// Ext.Ajax.request({
+//     url: '',
+//     success: function(response, opts) {
+//         var obj = Ext.decode(response.responseText);
+//         console.dir(obj);
+//     },
+//     failure: function(response, opts) {
+//         console.log('server-side failure with status code ' + response.status);
+//     }
+// });
+
+var server = 'http://' + document.location.host;
+
+function xhr(url) {
+  var request = new window.XMLHttpRequest();
+  request.open('GET', url, true);
+  request.send(null);
+}

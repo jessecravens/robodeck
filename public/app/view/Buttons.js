@@ -27,14 +27,18 @@ Ext.define('Kitchensink.view.Buttons', {
         items: [
             {
                 items: [
-                    {text: 'Normal', 
+                    {ui: 'round',
+					 text: 'Next', 
 					 handler: function(){
-						console.log('pressed');
-						var socket = io.connect();
-						socket.emit('client-mobile', { deckHandler: 'changeBG', color: 'red' });
+						console.log('pressed Next');
+						xhr(server + '/next');
 					}},
-                    {ui: 'round', text: 'Round'},
-                    {ui: 'small', text: 'Small'}
+                    {ui: 'round', 
+					text: 'Previous',
+					handler: function(){
+						console.log('pressed prev');
+						xhr(server + '/prev');
+					}}
                 ]
             },
             {
