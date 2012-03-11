@@ -1,6 +1,6 @@
 // Create any number of elements with class slide within the container
 section.slide
-	h1 roboDeck.js
+	h1 robodeck
 
 section.slide#how-to-overview
 	h2 How to Make a Deck
@@ -61,12 +61,28 @@ script
 		//console.log(data);
 		//socket.emit('client-desktop', { client: 'data', clientType: navigator.userAgent });
 	// });
-	socket.on('changeDeck', function (data) {
-		console.log("CHANGE REQUEST received");
-		console.log(data);
+	// socket.on('changeDeck', function (data) {
+		// console.log("CHANGE REQUEST received");
+		// console.log(data);
 		// upon change request - update UI
-		$(".deck-container").css({"background":"red"})
+		// $(".deck-container").css({"background":"red"})
 
 		// socket.emit('change:success', { client: 'hellyea', clientType: navigator.userAgent });
+	// });
+
+	// Im wondering if connection is deprecated?
+	socket.on('connection', function (data) {
+		console.log("CONNECTION");
+	});
+	socket.on('message', function (data) {
+		console.log("MESSAGE");
+		console.dir(JSON.parse(data));
+		var json = JSON.parse(data);		
+		console.log(json.state);
+
+		// var sToI = s.toInteger();
+		// console.log(typeof sToI)
+
+		$.deck('go', json.state);
 	});
 
