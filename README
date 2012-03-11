@@ -1,20 +1,25 @@
-A First Level Header
+robodeck
 ====================
 
-A Second Level Header
+Overview
 ---------------------
 
-Now is the time for all good men to come to
-the aid of their country. This is just a
-regular paragraph.
+Demonstration of using Sencha mobile remote to control a deck.js presentation running on node.js, express.js and socket.io, and useragent module for device detection. 
 
-The quick brown fox jumped over the lazy
-dog's back.
+All connected clients use websockets to 'listen' for events published by the remote app. 
 
-### Header 3
+Uses useragent module for device detection (currently only checks for iPhone/iPad user agent)n and delivers a Sencha 2.0 app to all ipad/iphone user agents. 
 
-> This is a blockquote.
-> 
-> This is the second paragraph in the blockquote.
->
-> ## This is an H2 in a blockquote
+### Node and Express
+
+### Useragent Module
+
+### WebSockets w/ Socket.io
+
+### Sencha 2.0
+
+
+
+
+
+
