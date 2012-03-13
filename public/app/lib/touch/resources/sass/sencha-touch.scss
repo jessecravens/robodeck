@@ -1,0 +1,35 @@
+// Modify me!
+
+// Here's some colours to experiment with - just change the base colour:
+// Black: #333
+// Red: #cc3333
+// Rust: #7A1E08
+// Blue/Aqua: #21eded
+
+// 
+$base-color: #21eded; // aqua blue colour
+$tabs-dark: #333333; // dark grey
+
+
+
+@import 'sencha-touch/default/all';
+
+@include sencha-panel;
+@include sencha-buttons;
+@include sencha-sheet;
+@include sencha-picker;
+@include sencha-tabs;
+@include sencha-toolbar;
+// Sets the 'black' toolbar style. NB, the 'black' part is just a name - I could have called it 'slate', 'veryblack', whatever!
+@include sencha-toolbar-ui('black', #333);
+
+@include sencha-toolbar-forms;
+@include sencha-carousel;
+@include sencha-indexbar;
+@include sencha-list;
+@include sencha-list-paging;
+@include sencha-list-pullrefresh;
+@include sencha-layout;
+@include sencha-form;
+@include sencha-msgbox;
+@include sencha-loading-spinner;
