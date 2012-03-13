@@ -1,0 +1,22 @@
+a, a:link, a:active, a:hover, a:visited {
+ color: #900;	
+}
+
+.x-toolbar-light .x-toolbar-title {
+	color: #fff;	
+}
+
+
+.x-tabbar .x-tab:last-child {
+	display: none; /* Fix for Sencha bug where invisible button is appended to bottom nav inexplicably */	
+}
+
+.x-toolbar-black .x-toolbar-title {
+	font-size: 0.8em;
+	text-align: left;
+}
+.x-toolbar-black {
+	height: 28px;
+	padding: 0px;
+	margin: 0px;	
+}
