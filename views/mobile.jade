@@ -8,18 +8,20 @@ html
     // script(src='./javascripts/sencha/sencha-touch-debug.js')
 
     // sencha 2.0
-    link(rel='stylesheet', href='../sencha2/resources/css/sencha-touch.css', title='senchatouch', id='senchatouch')
-    link(rel='stylesheet', href='../sencha2/resources/css/android.css', title='android', id='android')
-    link(rel='stylesheet', href='../sencha2/resources/css/apple.css', title='apple', id='apple')
-    link(rel='stylesheet', href='../sencha2/resources/css/bb6.css', title='bb6', id='bb6')
-    link(rel='stylesheet', href='../resources/css/sink.css')
+    link(rel='stylesheet', href='app/lib/touch/resources/css/sencha-touch.css', title='senchatouch', id='senchatouch')
+    link(rel='stylesheet', href='app/css/style.css', title='android', id='android')
+
     
-    script(src='../sencha2/builds/sencha-touch-all-debug.js')
+    script(src='app/lib/touch/sencha-touch.js')
+    script(src='app/app/app.js')
+    script(src='app/app/views/Viewport.js')
+    script(src='app/app/views/Home.js')
 
     // other    
     script(src='./modernizr.custom.js')
     script(src='./socket.io/socket.io.js')
-    script(src='./app-mobile.js')
+
+
     
   body.deck-container
     != body
