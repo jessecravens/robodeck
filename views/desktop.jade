@@ -16,7 +16,7 @@ section.slide#how-to-overview
 				p Add extra functionality to your deck, or leave it stripped down
 
 section.slide#elements-videos
-	h2 Code Example roboDeck.js
+	h2 Code Example robodeck.js
 		pre
 			code
 				$(function() {
@@ -36,6 +36,9 @@ form.goto-form(action='.', method='get')
 
 // deck.hash snippet
 a.deck-permalink(href='.', title='Permalink to this slide') #
+
+footer
+	p#clients 
 
 // Other extension HTML snippets go here, at the bottom of the deck container.
 // Update these paths to point to the correct files.
@@ -75,14 +78,29 @@ script
 		console.log("CONNECTION");
 	});
 	socket.on('message', function (data) {
-		console.log("MESSAGE");
+		
+		console.dir(data);
 		console.dir(JSON.parse(data));
 		var json = JSON.parse(data);		
-		console.log(json.state);
 
-		// var sToI = s.toInteger();
-		// console.log(typeof sToI)
-
-		$.deck('go', json.state);
+		if (json['state'] > -1) {
+			console.log('state: ' + json.state);
+			console.log("STATE MESSAGE");
+			// fire an event
+			$.deck('go', json.state);
+		}
+		else if (json.clients) {
+			console.log('clients: ' + json.clients);
+			console.log("CLIENT NUMBER MESSAGE");		
+			// update the DOM
+			$('#clients').text('CONNECTED CLIENTS: ' + json.clients);
+		}
+		else if (json.fn) {
+			console.log('callback fn: ' + json.fn);
+			console.log("FIRING SERVER DEFINED CALLBACK");
+			json.fn();
+			// update the DOM
+			// $('#clients').text('CONNECTED CLIENTS: ' + json.clients);
+		}
 	});
 

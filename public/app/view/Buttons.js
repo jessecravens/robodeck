@@ -38,6 +38,12 @@ Ext.define('Kitchensink.view.Buttons', {
 					handler: function(){
 						console.log('pressed prev');
 						xhr(server + '/prev');
+					}},
+					{ui: 'round', 
+					text: 'Other',
+					handler: function(){
+						console.log('pressed other');
+						xhr(server + '/other');
 					}}
                 ]
             },

@@ -2,16 +2,22 @@
 /**
  * module dependencies.
  */
-
 var express = require('express')
   , routes = require('./routes')
   , io = require('socket.io')
   , useragent = require('useragent');
 
-useragent(true);
+//useragent(true);
+
+console.log(io)
 
 // robodeck app
 var app = module.exports = express.createServer();
+
+// io.configure(app.settings.env, function(){
+// console.log('configuring')
+//   // io.set('heartbeats', false);
+// });
 
 // Set the state of the slides to 0
 var state = 0;
@@ -32,17 +38,20 @@ function send(message) {
   // Iterate through all potential clients
   clients.forEach(function(client) {
 	
-	console.log(client.manager.open)
+	// console.log(client)
+	// console.log(client.manager.open)
 	
     // User is still connected, send message
 
-	// This needs to change I dont believe its ever falling into false, but havent really tested yet
+	// This needs to change I dont believe its ever falling into false, 
+	// but havent really tested yet
     if(client.manager.open) {
 	  console.log(client.id + ' IS LISTENING');
       client.send(message);
     }
     // Prune out disconnected user
     else {
+	  console.log('DELETING CLIENT WITH ID: ' + client.id );
       delete client;
     }
   });
@@ -138,9 +147,50 @@ app.get('/prev', function(req, res) {
 	}
 });
 
+
+app.get('/other', function(req, res) {
+  
+  console.log('OTHER'); 
+  console.log(state);
+
+	var ua = useragent.is(req.headers['user-agent'])
+	switch(true)
+	{
+	case ua.chrome:
+	  // shouldnt fall in here. Unless desktop hits /other - but it shouldnt
+	  console.log('within OTHER route /other detected as chrome desktop');
+	  break;
+	case ua.mobile_safari:
+	  console.log('within OTHER route /other detected as mobile_safari');	
+	
+	  // catch xhr via iphone or ipad and send state
+	  send(JSON.stringify({ "fn": function(){console.log('other callback fn')} }));
+	  break;
+	default:
+	  console.log('within OTHER route /other fallback to default');
+	}
+});
+
+
 app.listen(process.env.PORT || 15184);
 
+// io.set('log level', 1);
+// io.set('heartbeats', false);
+// var sio = io.listen(app, [{"heartbeats": false}]);
+// var sio = io.listen(app, {"heartbeats": true, "heartbeat timeout": 30, "heartbeat interval": 30});
+// var sio = io.listen(app, {"heartbeats": false, "heartbeat timeout": 2, "heartbeat interval": 2});
+// var sio = io.listen(app, {"heartbeat timeout": 2, "heartbeat interval": 2});
+// var sio = io.listen(app, {"heartbeats": false});
+
 var sio = io.listen(app);
+
+console.log(sio.settings);
+
+sio.configure(app.settings.env, function(){
+console.log('configuring')
+//   // io.set('heartbeats', false);
+});
+
 
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 // console.log(app)
@@ -149,15 +199,52 @@ console.log("Express server listening on port %d in %s mode", app.address().port
 
 sio.sockets.on('connection', function(client) {
   // For each connection made add the client to the array of clients.
+
+  console.log('connection EVENT FIRED');
   clients.push(client);
+  console.log(clients.length);
+
+  send(JSON.stringify({ "clients": clients.length }));
 
   // log each clients id
   clients.forEach(function(client) {
 	console.log('CLIENT connected')
     console.log(client.id);
   });
+
+
+  client.on('disconnect', function () {
+    console.log('disconnect EVENT FIRED');
+	console.log(clients.length)
+	var index = clients.indexOf(client.id);
+	console.log(index)
+	clients.splice(index, 1);
+	console.log(clients.length)
+  });
   
 });
+
+// sio.sockets.on('disconnect', function(client) {
+//   // For each disconnect remove the client to the array of clients.
+// 	console.log('disconnect EVENT FIRED');
+// 
+// 	var index = clients.indexOf(client.id);
+// 	clients.splice(index, 1);
+// 
+//     // clients.push(client);
+//     console.log(clients.length);
+// 
+//     send(JSON.stringify({ "clients": clients.length }));
+// 
+//   // log each clients id
+//   clients.forEach(function(client) {
+// 	console.log('CLIENT disconnected');
+//     console.log(client.id);
+//   });
+//   
+// });
+
+
 
 // sio.sockets.on('connection', function (socket) {
 //   // emit a message to client devices	

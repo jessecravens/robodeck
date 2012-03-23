@@ -6,3 +6,11 @@ body {
 a {
   color: #00B7FF;
 }
+
+footer {
+	background-color: #fff;
+}
+
+#clients {
+	color: red
+}
