@@ -123,9 +123,9 @@ app.get('/next', function(req, res) {
 });
 
 // Prev will... move the slides backwards!
-app.get('/prev', function(req, res) {
+app.get('/back', function(req, res) {
   
-  console.log('PREVIOUS'); 
+  console.log('BACK'); 
   state--;
   console.log(state);
 
@@ -143,7 +143,7 @@ app.get('/prev', function(req, res) {
 	  send(JSON.stringify({ "state": state }));
 	  break;
 	default:
-	  console.log('within PREV route /prev fallback to default');
+	  console.log('within BACK route /back fallback to default');
 	}
 });
 

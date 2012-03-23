@@ -1,3 +1,13 @@
+
+
+var server = 'http://' + document.location.host;
+
+function xhr(url) {
+  var request = new window.XMLHttpRequest();
+  request.open('GET', url, true);
+  request.send(null);
+}
+
 app.views.Home = Ext.extend(Ext.Panel, {
   xtype: 'panel',
   title: 'Home',
@@ -14,32 +24,29 @@ app.views.Home = Ext.extend(Ext.Panel, {
     {
       xtype: 'button',
       text: 'Forward',
-     // ui: 'black',
-      listeners: {
-        test: function() { // This function will be called when the 'quit' event is fired
-            // By default, "this" will be the object that fired the event.  
-        }
-      }
+      // ui: 'black',
+	  handler: function(){
+		console.log('pressed Next');
+		xhr(server + '/next');
+	  }
     },
     {
       xtype: 'button',
       text: 'Back',
      // ui: 'black',
-      listeners: {
-        test: function() { // This function will be called when the 'quit' event is fired
-            // By default, "this" will be the object that fired the event.  
-        }
-      }
+	  handler: function(){
+		console.log('pressed Back');
+		xhr(server + '/back');
+	  }
     },
     {
       xtype: 'button',
       text: 'Special Event',
       //ui: 'black',
-      listeners: {
-        test: function() { // This function will be called when the 'quit' event is fired
-            // By default, "this" will be the object that fired the event.  
-        }
-      }
+	  handler: function(){
+		console.log('pressed Other');
+		xhr(server + '/other');
+	  }
     }
   ],
   dockedItems: [{
