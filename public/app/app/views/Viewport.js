@@ -19,7 +19,7 @@ app.views.Viewport = Ext.extend(Ext.TabPanel, {
         Ext.apply(this, {
            items: [
                 app.views.home,
-                {html: 'another view', title: 'View and Control Your Deck', iconCls: 'favorites'}
+                {html: 'another view', title: 'Controls', iconCls: 'favorites'}
             ]
         }); 
         app.views.Viewport.superclass.initComponent.apply(this, arguments);

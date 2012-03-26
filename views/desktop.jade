@@ -3,26 +3,11 @@ section.slide
 	h1 robodeck
 
 section.slide#how-to-overview
-	h2 How to Make a Deck
-		ol
-			li
-				h3 Write Slides
-				p Slide content is simple HTML
-			li
-				h3 Choose Themes
-				p One for slide styles and one for deck transitions
-			li
-				h3 Include Extensions
-				p Add extra functionality to your deck, or leave it stripped down
+	h1 robodeck slide 1
 
 section.slide#elements-videos
-	h2 Code Example robodeck.js
-		pre
-			code
-				$(function() {
-				&#32;&#32;$.deck('.slide');
-				});
-
+	h1 robodeck slide 2
+	
 // deck.navigation snippet
 a.deck-prev-link(href='#', title='Previous') &#8592
 a.deck-next-link(href='#', title='Next') &#8594
@@ -38,8 +23,10 @@ form.goto-form(action='.', method='get')
 a.deck-permalink(href='.', title='Permalink to this slide') #
 
 footer
-	p#clients 
-
+	div#clients
+		p#viewers 
+		p#locations
+		p#tweets
 // Other extension HTML snippets go here, at the bottom of the deck container.
 // Update these paths to point to the correct files.
 
@@ -73,12 +60,29 @@ script
 		// socket.emit('change:success', { client: 'hellyea', clientType: navigator.userAgent });
 	// });
 
-	// Im wondering if connection is deprecated?
-	socket.on('connection', function (data) {
-		console.log("CONNECTION");
+	// Im wondering if connection is deprecated? Yup, its connect.
+
+	socket.on('connect', function (data) {
+		console.log("client connect EVENT FIRED");
+		console.log('geo')
+		function success(position) {
+			console.log(position);
+			socket.emit('geo', { long: position.coords.longitude, lat: position.coords.latitude });
+		}
+
+		function error(msg) {
+			console.log(msg);
+		}
+
+		if (navigator.geolocation) {
+			console.log('supported')
+			navigator.geolocation.getCurrentPosition(success, error);
+		} else {
+			error('not supported');
+		};
 	});
+
 	socket.on('message', function (data) {
-		
 		console.dir(data);
 		console.dir(JSON.parse(data));
 		var json = JSON.parse(data);		
@@ -93,7 +97,13 @@ script
 			console.log('clients: ' + json.clients);
 			console.log("CLIENT NUMBER MESSAGE");		
 			// update the DOM
-			$('#clients').text('CONNECTED CLIENTS: ' + json.clients);
+			$('#viewers').text('viewers:' + json.clients);
+		}
+		else if (json.loc) {
+			console.log('loc: ' + json.loc);
+			console.log("CLIENT loc MESSAGE");	
+			// update the DOM
+			$('#locations').append('locations:' + json.loc);
 		}
 		else if (json.fn) {
 			console.log('callback fn: ' + json.fn);
@@ -102,5 +112,8 @@ script
 			// update the DOM
 			// $('#clients').text('CONNECTED CLIENTS: ' + json.clients);
 		}
+
+		$('#tweets').text('tweets:' + json.clients);
+
 	});
 

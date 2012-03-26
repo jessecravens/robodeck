@@ -3,14 +3,14 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-a {
-  color: #00B7FF;
-}
-
-footer {
-	background-color: #fff;
+.deck-current {
+	
 }
 
 #clients {
-	color: red
+	position: absolute;
+	width: 2000px; 
+	height: 300px;
+	z-index: 1000;
+	font-size: 55px;
 }

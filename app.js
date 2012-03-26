@@ -5,19 +5,23 @@
 var express = require('express')
   , routes = require('./routes')
   , io = require('socket.io')
-  , useragent = require('useragent');
+  , useragent = require('useragent')
+  , gm = require('googlemaps')
+  , yqlgeo = require('./node_modules/yqlgeo');
 
+// Uncomment to update useragent lookup table
 //useragent(true);
 
-console.log(io)
+// console.log(io)
+// console.log(express);
+// console.log(yqlgeo);
+// console.log(useragent);
+// console.log(gm);
 
-// robodeck app
+///////////////////////////////////////////////////////////////////// ROBODECK APP
 var app = module.exports = express.createServer();
 
-// io.configure(app.settings.env, function(){
-// console.log('configuring')
-//   // io.set('heartbeats', false);
-// });
+// console.log(app);
 
 // Set the state of the slides to 0
 var state = 0;
@@ -25,28 +29,26 @@ var state = 0;
 // Clients is a list of users who have connected
 var clients = [];
 
+///////////////////////////////////////////////////////////////////// SEND() UTILITY
 // simple wrapper for sending a message
 // to all the connected users and pruning out the
 // disconnected ones.
 
 function send(message) {
 	
-  console.log('SENDING');
-  console.log(message);
-  console.log(typeof message)
-
+  // console.log('SENDING');
+  // console.log(message);
+  // console.log(typeof message)
   // Iterate through all potential clients
   clients.forEach(function(client) {
 	
 	// console.log(client)
 	// console.log(client.manager.open)
-	
     // User is still connected, send message
-
 	// This needs to change I dont believe its ever falling into false, 
-	// but havent really tested yet
+	// but havent really tested yet - TESTED, not working - API changed
     if(client.manager.open) {
-	  console.log(client.id + ' IS LISTENING');
+	  //console.log(client.id + ' IS LISTENING');
       client.send(message);
     }
     // Prune out disconnected user
@@ -57,7 +59,7 @@ function send(message) {
   });
 }
 
-// app configs
+///////////////////////////////////////////////////////////////////// APP CONFIGS
 app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
@@ -75,9 +77,9 @@ app.configure('production', function(){
   app.use(express.errorHandler());
 });
 
-// routes
+///////////////////////////////////////////////////////////////////// INITIAL LOAD - DEVICE DETECT --> SERVE MARKUP, STATIC ASSETS
+///////////////////////////////////////////////////////////////////// ROUTES
 
-// Deliver 
 app.get('/', function(req, res) {
 	
 	var ua = useragent.is(req.headers['user-agent'])
@@ -97,7 +99,8 @@ app.get('/', function(req, res) {
 	}
 });
 
-// Next will... move the slides forward!
+///////////////////////////////////////////////////////////////////// ACCEPT XHR CALLS FROM REMOTE MOBILE APP 
+///////////////////////////////////////////////////////////////////// ROUTES - Next()
 app.get('/next', function(req, res) {
 	
   console.log('NEXT');	
@@ -122,7 +125,7 @@ app.get('/next', function(req, res) {
 	}
 });
 
-// Prev will... move the slides backwards!
+///////////////////////////////////////////////////////////////////// ROUTES - Back()
 app.get('/back', function(req, res) {
   
   console.log('BACK'); 
@@ -147,7 +150,7 @@ app.get('/back', function(req, res) {
 	}
 });
 
-
+///////////////////////////////////////////////////////////////////// ROUTES - Other()
 app.get('/other', function(req, res) {
   
   console.log('OTHER'); 
@@ -171,9 +174,9 @@ app.get('/other', function(req, res) {
 	}
 });
 
+app.listen(process.env.PORT || 1511);
 
-app.listen(process.env.PORT || 15184);
-
+///////////////////////////////////////////////////////////////////// SOCKET.IO SERVER
 // io.set('log level', 1);
 // io.set('heartbeats', false);
 // var sio = io.listen(app, [{"heartbeats": false}]);
@@ -183,24 +186,14 @@ app.listen(process.env.PORT || 15184);
 // var sio = io.listen(app, {"heartbeats": false});
 
 var sio = io.listen(app);
-
-console.log(sio.settings);
-
-sio.configure(app.settings.env, function(){
-console.log('configuring')
-//   // io.set('heartbeats', false);
-});
-
-
+// console.log(sio.settings);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
-// console.log(app)
 
-// web sockets
 
+///////////////////////////////////////////////////////////////////// SOCKET.IO WEB SOCKETS
 sio.sockets.on('connection', function(client) {
   // For each connection made add the client to the array of clients.
-
-  console.log('connection EVENT FIRED');
+  console.log('server connection EVENT FIRED');
   clients.push(client);
   console.log(clients.length);
 
@@ -212,58 +205,33 @@ sio.sockets.on('connection', function(client) {
     console.log(client.id);
   });
 
-
   client.on('disconnect', function () {
     console.log('disconnect EVENT FIRED');
-	console.log(clients.length)
+	// console.log(clients.length)
 	var index = clients.indexOf(client.id);
 	console.log(index)
 	clients.splice(index, 1);
 	console.log(clients.length)
   });
+
+  client.on('geo', function(data) {
+	console.log('geo MESSAGE received');
+	console.log(data);
+	var loc = data.lat + "," + data.long
+	console.log(loc)
+	gm.reverseGeocode(loc, function(err, data){
+	  // console.log(JSON.stringify(data));
+	  // console.log(data.results[0].address_components[2].long_name);
+	  // console.log(data.results[0].address_components[4].long_name);
+	  var city = data.results[0].address_components[2].long_name;	
+	  var state = data.results[0].address_components[4].long_name;
+	
+	  var loc = city + ", " + state; 
+	
+	  send(JSON.stringify({ "loc": loc }));
+	
+
+	});
+  });
   
 });
-
-// sio.sockets.on('disconnect', function(client) {
-//   // For each disconnect remove the client to the array of clients.
-// 	console.log('disconnect EVENT FIRED');
-// 
-// 	var index = clients.indexOf(client.id);
-// 	clients.splice(index, 1);
-// 
-//     // clients.push(client);
-//     console.log(clients.length);
-// 
-//     send(JSON.stringify({ "clients": clients.length }));
-// 
-//   // log each clients id
-//   clients.forEach(function(client) {
-// 	console.log('CLIENT disconnected');
-//     console.log(client.id);
-//   });
-//   
-// });
-
-
-
-// sio.sockets.on('connection', function (socket) {
-//   // emit a message to client devices	
-//   socket.emit('server', { server: 'data' });
-// 
-//   // listen for a message from mobile clients
-//   socket.on('client-mobile', function (data) {
-// 	console.log('CLIENT MOBILE event');    
-// 	console.log(data);
-// 	// pass date with callback function to desktop client
-// 	socket.emit('changeDeck', { update: data });
-//   });
-// 
-//   // listen for a message from desktop clients
-//   socket.on('client-desktop', function (data) {
-// 	console.log('CLIENT DESKTOP event');    
-// 	console.log(data);
-// 	socket.emit('changeDeck', { update: data });
-// 	
-//   });
-//   // console.log('A socket connected!');
-// });
