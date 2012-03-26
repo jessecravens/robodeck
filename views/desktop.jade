@@ -47,18 +47,6 @@ script
 
 script
 	var socket = io.connect();
-	// socket.on('server', function (data) {
-		//console.log(data);
-		//socket.emit('client-desktop', { client: 'data', clientType: navigator.userAgent });
-	// });
-	// socket.on('changeDeck', function (data) {
-		// console.log("CHANGE REQUEST received");
-		// console.log(data);
-		// upon change request - update UI
-		// $(".deck-container").css({"background":"red"})
-
-		// socket.emit('change:success', { client: 'hellyea', clientType: navigator.userAgent });
-	// });
 
 	// Im wondering if connection is deprecated? Yup, its connect.
 
@@ -93,6 +81,12 @@ script
 			// fire an event
 			$.deck('go', json.state);
 		}
+		if (json.cmd) {
+			console.log('cmd: ' + json.cmd);
+			console.log("CMD MESSAGE");
+			// call deck.js api
+			$.deck(json.cmd)
+		}
 		else if (json.clients) {
 			console.log('clients: ' + json.clients);
 			console.log("CLIENT NUMBER MESSAGE");		
@@ -109,11 +103,9 @@ script
 			console.log('callback fn: ' + json.fn);
 			console.log("FIRING SERVER DEFINED CALLBACK");
 			json.fn();
-			// update the DOM
-			// $('#clients').text('CONNECTED CLIENTS: ' + json.clients);
 		}
 
-		$('#tweets').text('tweets:' + json.clients);
+		// $('#tweets').text('tweets:' + json.clients);
 
 	});
 
