@@ -38,6 +38,7 @@ body.deck-container {
 #locationsWrapper {
    height: 250px;
    overflow: hidden;
+   position: relative;
     
     }
     
