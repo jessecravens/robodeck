@@ -97,7 +97,7 @@ script
 			console.log('loc: ' + json.loc);
 			console.log("CLIENT loc MESSAGE");	
 			// update the DOM
-			$('#locations').append('locations:' + json.loc);
+			$('#locations').append('location:' + json.loc +'</br>');
 		}
 		else if (json.fn) {
 			console.log('callback fn: ' + json.fn);
