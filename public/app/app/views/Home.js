@@ -1,11 +1,14 @@
-
-
 var server = 'http://' + document.location.host;
+
+function getTime(){
+	var currentTime = new Date();
+	return currentTime;
+}
 
 function xhr(url) {
   var request = new window.XMLHttpRequest();
   request.open('GET', url, true);
-  request.send(null);
+  request.send(getTime());
 }
 
 app.views.Home = Ext.extend(Ext.Panel, {
@@ -20,7 +23,6 @@ app.views.Home = Ext.extend(Ext.Panel, {
           margin: 30
       },
   items: [
-     
     {
       xtype: 'button',
       text: 'Forward',
@@ -57,6 +59,4 @@ app.views.Home = Ext.extend(Ext.Panel, {
     title: 'Control Deck',
     items: [  ]
   }]
-
-  
 });
