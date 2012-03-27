@@ -57,21 +57,27 @@ app.configure('production', function(){
 ///////////////////////////////////////////////////////////////////// ROUTES
 app.get('/', function(req, res) {
 	
-	var ua = useragent.is(req.headers['user-agent'])
-	switch(true)
-	{
-	case ua.chrome:
-	  console.log('within ROOT route / detected as chrome desktop');
-	  routes.desktop(req, res);
-	  break;
-	case ua.mobile_safari:
-	  console.log('within ROOT route / detected as mobile_safari');
+	routes.desktop(req, res);
+	
+	// var ua = useragent.is(req.headers['user-agent'])
+	// switch(true)
+	// {
+	// case ua.chrome:
+	//   console.log('within ROOT route / detected as chrome desktop');
+	//   routes.desktop(req, res);
+	//   break;
+	// case ua.mobile_safari:
+	//   console.log('within ROOT route / detected as mobile_safari');
+	//   routes.iphone(req, res);
+	//   break;
+	// default:
+	//   console.log('within ROOT route / fallback to default');
+	//   routes.desktop(req, res);
+	// }
+});
+
+app.get('/x', function(req, res) {
 	  routes.iphone(req, res);
-	  break;
-	default:
-	  console.log('within ROOT route / fallback to default');
-	  routes.desktop(req, res);
-	}
 });
 
 ///////////////////////////////////////////////////////////////////// ACCEPT XHR CALLS FROM REMOTE MOBILE APP 
@@ -95,7 +101,8 @@ app.get('/other', function(req, res) {
 app.listen(process.env.PORT || 1511);
 
 ///////////////////////////////////////////////////////////////////// SOCKET.IO SERVER
-var sio = io.listen(app, {"heartbeats": false, "transports": ['websocket'], "close timeout": 100});
+// var sio = io.listen(app, {"heartbeats": false, "transports": ['websocket'], "close timeout": 100});
+var sio = io.listen(app);
 console.log(sio.settings);
 
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
