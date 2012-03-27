@@ -290,11 +290,7 @@ that use the API provided by core.
 		Moves to the next slide. If the last slide is already active, the call
 		is ignored.
 		*/
-		next: function() {
-			console.log('next');
-			var socket = io.connect();
-			socket.emit('client-desktop', { deckEvent: 'next'});
-			
+		next: function() {			
 			methods.go(current+1);
 		},
 		

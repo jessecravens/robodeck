@@ -17,13 +17,12 @@ var app = module.exports = express.createServer();
 // console.log(app);
 
 // Set the state of the slides to 0
-var state = 0;
+// var state = 0;
 
 // Clients is a list of users who have connected
 var clients = [];
 
 ///////////////////////////////////////////////////////////////////// SEND() UTILITY
-
 function send(message) { 
 	
   clients.forEach(function(client) {
@@ -31,6 +30,11 @@ function send(message) {
   });
 }
 
+///////////////////////////////////////////////////////////////////// DATE UTILITY
+function getTime(){
+	var currentTime = new Date();
+	return currentTime;
+}
 ///////////////////////////////////////////////////////////////////// APP CONFIGS
 app.configure(function(){
   app.set('views', __dirname + '/views');
@@ -51,7 +55,6 @@ app.configure('production', function(){
 
 ///////////////////////////////////////////////////////////////////// INITIAL LOAD - DEVICE DETECT --> SERVE MARKUP, STATIC ASSETS
 ///////////////////////////////////////////////////////////////////// ROUTES
-
 app.get('/', function(req, res) {
 	
 	var ua = useragent.is(req.headers['user-agent'])
@@ -74,12 +77,13 @@ app.get('/', function(req, res) {
 ///////////////////////////////////////////////////////////////////// ACCEPT XHR CALLS FROM REMOTE MOBILE APP 
 ///////////////////////////////////////////////////////////////////// ROUTES - Next()
 app.get('/next', function(req, res) {
-  console.log('NEXT');	
+  console.log('NEXT- ' + 'server time: ' + getTime() + ', client time: ' + req);	
   send(JSON.stringify({ "cmd": 'next' }));
 });
 
 ///////////////////////////////////////////////////////////////////// ROUTES - Back()
 app.get('/back', function(req, res) {
+  console.log('PREV ' + getTime());
   send(JSON.stringify({ "cmd": 'prev' }));
 });
 
@@ -91,9 +95,9 @@ app.get('/other', function(req, res) {
 app.listen(process.env.PORT || 1511);
 
 ///////////////////////////////////////////////////////////////////// SOCKET.IO SERVER
+var sio = io.listen(app, {"heartbeats": false, "transports": ['websocket'], "close timeout": 100});
+console.log(sio.settings);
 
-var sio = io.listen(app);
-// console.log(sio.settings);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 
 ///////////////////////////////////////////////////////////////////// SOCKET.IO WEB SOCKETS
