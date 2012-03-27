@@ -3,7 +3,7 @@ body {
     width: 90%;
     }
 
-#client{
+#clients{
     position: absolute;
     width: 250px;
     height: 300px;
@@ -13,7 +13,7 @@ body {
     left: 0;
 }
 
-#views {
+#viewers {
     color: #E3E;
     font-weight: 200;
     font-family: courier;
