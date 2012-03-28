@@ -112,6 +112,8 @@ console.log("Express server listening on port %d in %s mode", app.address().port
 sio.sockets.on('connection', function(client) {
   // For each connection made add the client to the array of clients.
   console.log('server connection EVENT FIRED');
+  //console.log('CLIENT connected'); 
+  console.log('CLIENT ID: ' + client.id + ', TRANSPORT MECHANISM: ' + sio.transports[client.id].name);
 
 ///////////////////////////////////////////////////////////////////// BUILD CLIENTS LIST
   clients.push(client);
@@ -121,8 +123,10 @@ sio.sockets.on('connection', function(client) {
 
   // log each clients id
   clients.forEach(function(client) {
-	console.log('CLIENT connected')
-    console.log(client.id);
+	
+    console.log('CLIENT ID: ' + client.id);
+    // console.log(client);
+	
   });
 
   client.on('disconnect', function () {

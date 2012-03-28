@@ -39,17 +39,17 @@ app.views.Home = Ext.extend(Ext.Panel, {
 	  handler: function(){
 		console.log('pressed Back');
 		xhr(server + '/back');
-	  }
-    },
-    {
-      xtype: 'button',
-      text: 'Special Event',
-      //ui: 'black',
-	  handler: function(){
-		console.log('pressed Other');
-		xhr(server + '/other');
-	  }
+	 }
     }
+		//     {
+		//       xtype: 'button',
+		//       text: 'Special Event',
+		//       //ui: 'black',
+		// 	  handler: function(){
+		// console.log('pressed Other');
+		// xhr(server + '/other');
+		// 	  }
+		//     }
   ],
   dockedItems: [{
     xtype: 'toolbar',
