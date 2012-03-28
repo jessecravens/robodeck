@@ -1,0 +1,57 @@
+
+body.deck-container {
+    width: 90%;
+    }
+
+#clients{
+    position: absolute;
+    width: 250px;
+    height: 300px;
+    z-index: 1000;
+    font-size: 22px;
+    top: 0;
+    left: 0;
+}
+
+#viewers {
+    color: #E3E;
+    font-weight: 200;
+    font-family: courier;
+    text-transform: uppercase;
+    }
+    
+    
+#locations {
+    font-weight: 200;
+    color: #EF3;
+    font-family: courier;
+    font-size: 12px;
+    overflow: hidden;
+    position: absolute;
+    bottom: 0;
+    min-height: 250px;
+    
+}
+
+
+
+#locationsWrapper {
+   height: 250px;
+   overflow: hidden;
+   position: relative;
+    
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
