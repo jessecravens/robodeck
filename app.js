@@ -102,8 +102,8 @@ app.listen(process.env.PORT || 1511);
 
 ///////////////////////////////////////////////////////////////////// SOCKET.IO SERVER
 // var sio = io.listen(app, {"heartbeats": false, "transports": ['websocket'], "close timeout": 100});
-var sio = io.listen(app, {"heartbeats": false, "close timeout": 100});
-// var sio = io.listen(app);
+// var sio = io.listen(app, {"heartbeats": false, "close timeout": 100});
+var sio = io.listen(app);
 console.log(sio.settings);
 
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
