@@ -1,12 +1,25 @@
 // Create any number of elements with class slide within the container
 section.slide
 	h1 robodeck
+	ol Interactive Demo - Connecting and GeoLocation
+		li Connect to http://robodeck.herokuapp.com
+		li Your Browser will detect Web Socket Support
+		li If necessary, your browser will fallback to Comet techniques
+		li Once connection is established, your browser will pass GeoLocation to server
+		li Server pushes GeoLocation data to all clients
 
-section.slide#how-to-overview
-	h1 robodeck slide 1
+section.slide#remote
+	h1 robodeck
+	ol Interactive Demo - Remote Control Pub/Sub
+		li We connect to the same application with a Sencha 2.O HTML5 Mobile Web app
+		li We advance the deck by publishing NEXT or PREV command messages to the server
+		li All connected clients are subscribing to the commands
+		li Client JavaScript then controls the deck
 
-section.slide#elements-videos
-	h1 robodeck slide 2
+section.slide#thanks
+	h1 robodeck
+	ol Interactive Demo - the end.
+
 	
 // deck.navigation snippet
 a.deck-prev-link(href='#', title='Previous') &#8592
