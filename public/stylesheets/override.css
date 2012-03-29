@@ -10,7 +10,7 @@ body.deck-container {
     z-index: 1000;
     font-size: 22px;
     top: 0;
-    left: 0;
+    right: 0;
 }
 
 #viewers {
